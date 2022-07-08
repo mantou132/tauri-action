@@ -11,7 +11,9 @@ export default async function uploadVersionJSON({
   notes,
   releaseId,
   artifacts,
+  corsAnywhere,
 }: {
+  corsAnywhere: string,
   version: string;
   notes: string;
   releaseId: number;
@@ -72,7 +74,7 @@ export default async function uploadVersionJSON({
         .replace("x32", "i686")}`
     ] = {
       signature: sigFile ? readFileSync(sigFile).toString() : undefined,
-      url: downloadUrl,
+      url: corsAnywhere ? `${corsAnywhere}/${downloadUrl}` : downloadUrl,
     };
   }
 

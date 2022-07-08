@@ -25,6 +25,7 @@ async function run(): Promise<void> {
     const tauriScript = core.getInput('tauriScript')
     const args = stringArgv(core.getInput('args'))
     const bundleIdentifier = core.getInput('bundleIdentifier')
+    const corsAnywhere = core.getInput('corsAnywhere')
 
     let tagName = core.getInput('tagName').replace('refs/tags/', '')
     let releaseName = core.getInput('releaseName').replace('refs/tags/', '')
@@ -110,7 +111,7 @@ async function run(): Promise<void> {
         }
       }
       await uploadReleaseAssets(releaseId, artifacts)
-      await uploadVersionJSON({ version: info.version, notes: body, releaseId, artifacts });
+      await uploadVersionJSON({ version: info.version, notes: body, releaseId, artifacts, corsAnywhere });
     }
   } catch (error) {
     core.setFailed(error.message)
